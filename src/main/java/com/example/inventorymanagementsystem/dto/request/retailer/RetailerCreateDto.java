@@ -6,6 +6,13 @@ public class RetailerCreateDto {
     private String password;
     private String photo;
 
+    public RetailerCreateDto(String name, String email, String password, String photo) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.photo = photo;
+    }
+
     public String getName() {
         return name;
     }
