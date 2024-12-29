@@ -17,11 +17,12 @@ public class LogoutServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             if (request.getSession().getAttribute("retailer") != null) {
                 request.getSession().removeAttribute("retailer");
-                response.sendRedirect("login.jsp");
-            } else {
-                response.sendRedirect("index.jsp");
+            }
+            else if (request.getSession().getAttribute("supplier") != null) {
+            request.getSession().removeAttribute("supplier");
             }
 
+            response.sendRedirect("login.jsp");
         }
     }
 }
