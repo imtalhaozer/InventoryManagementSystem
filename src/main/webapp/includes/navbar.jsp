@@ -14,12 +14,18 @@
             <li class="nav-item">
                 <a class="nav-link" href="cart.jsp">
                     <i class="fas fa-shopping-cart"></i> Cart
-                    <span class="badge badge-danger">${cart_list.size()}</span>
                 </a>
             </li>
-            <% if (retailer != null) { %>
+            <% if (supplier != null) { %>
             <li class="nav-item">
-                <a class="nav-link" href="orders.jsp">
+                <a class="nav-link" href="addProduct.jsp">
+                    <i class="fa-solid fa-cube"></i> Add Product
+                </a>
+            </li>
+            <% }%>
+            <% if (retailer != null || supplier != null) { %>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
                     <i class="fas fa-box"></i> Orders
                 </a>
             </li>
@@ -32,6 +38,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="login.jsp">
                     <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="register.jsp">
+                    <i class="fa-solid fa-file-signature"></i> Sign Up
                 </a>
             </li>
             <% } %>
