@@ -20,7 +20,7 @@
   <div class="card w-50 mx-auto my-5">
     <div class="card-header text-center">Product Registration</div>
     <div class="card-body">
-      <form id="product-register-form" method="post" action="add-product">
+      <form id="product-register-form" method="post" action="private/add-product">
         <div class="form-group">
           <label>Product Name</label>
           <input type="text" name="name" class="form-control" placeholder="Enter product name" required>

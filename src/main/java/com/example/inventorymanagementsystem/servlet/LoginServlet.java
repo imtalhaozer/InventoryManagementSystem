@@ -5,6 +5,7 @@ import com.example.inventorymanagementsystem.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +38,11 @@ public class LoginServlet extends HttpServlet {
                 UserResponseDto user= userService.Login(email,password);
 
                 if (user != null) {
+                    Cookie authCookie = new Cookie("authToken", "authenticatedUser");
+                    authCookie.setHttpOnly(true);
+                    authCookie.setMaxAge(60 * 60);
+                    response.addCookie(authCookie);
+
                     if ("Retailer".equals(user.getRole())) {
                         request.getSession().setAttribute("retailer", user);
                         response.sendRedirect("index.jsp");

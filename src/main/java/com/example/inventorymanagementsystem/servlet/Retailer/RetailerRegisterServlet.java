@@ -2,6 +2,7 @@ package com.example.inventorymanagementsystem.servlet.Retailer;
 
 import com.example.inventorymanagementsystem.dto.request.retailer.RetailerCreateDto;
 import com.example.inventorymanagementsystem.dto.response.ResponseDto;
+import com.example.inventorymanagementsystem.service.CartService;
 import com.example.inventorymanagementsystem.service.RetailerService;
 
 import javax.servlet.ServletException;
@@ -12,15 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/register-retailer")
+@WebServlet("/public-register-retailer")
 public class RetailerRegisterServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private RetailerService retailerService;
+    private CartService cartService;
 
     @Override
     public void init() throws ServletException {
         try {
             this.retailerService = new RetailerService();
+            this.cartService = new CartService();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -37,7 +40,6 @@ public class RetailerRegisterServlet extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String photo = null; //request.getParameter("photo");
-
             RetailerCreateDto retailerCreateDto = new RetailerCreateDto(name, email, password, photo);
 
             boolean isRegistered = retailerService.registerRetailer(
@@ -46,6 +48,11 @@ public class RetailerRegisterServlet extends HttpServlet {
                     retailerCreateDto.getPassword(),
                     retailerCreateDto.getPhoto()
             );
+
+            //create new cart for retailer
+            String retailerId = retailerService.getRetailerIdByEmail(email);
+            cartService.addCart(retailerId);
+
             String message;
             if (isRegistered){
                 message = "Supplier successfully registered!";

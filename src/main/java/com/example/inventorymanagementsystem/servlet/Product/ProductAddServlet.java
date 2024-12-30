@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/add-product")
+@WebServlet("/private/add-product")
 public class ProductAddServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private  ProductService productService;

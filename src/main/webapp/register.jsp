@@ -73,9 +73,9 @@
         const accountType = document.getElementById('account-type').value;
 
         if (accountType === "retailer") {
-            this.action = "register-retailer";
+            this.action = "public-register-retailer";
         } else if (accountType === "supplier") {
-            this.action = "register-supplier";
+            this.action = "public-register-supplier";
         } else {
             event.preventDefault();
             alert("Please select a valid account type!");

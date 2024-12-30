@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/product-get-all")
+@WebServlet("/public-product-get-all")
 public class ProductGetAllServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -31,13 +31,15 @@ public class ProductGetAllServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         try {
             List<ProductResponseDto> products = productService.getAllProducts();
-            request.setAttribute("products", products);
+            request.getSession().setAttribute("products", products);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            request.setAttribute("error", "Failed to load products. Please try again later.");
         }
+
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
 
