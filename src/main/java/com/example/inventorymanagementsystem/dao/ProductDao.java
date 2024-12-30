@@ -81,6 +81,7 @@ public class ProductDao {
             rs = pst.executeQuery();
             while (rs.next()) {
                 ProductResponseDto product = new ProductResponseDto();
+                product.setId(rs.getLong("id"));
                 product.setName(rs.getString("name"));
                 product.setStockQuantity(rs.getInt("stockQuantity"));
                 product.setPrice(rs.getDouble("price"));

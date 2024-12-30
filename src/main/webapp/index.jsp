@@ -6,11 +6,9 @@
 <%
     UserResponseDto retailer = (UserResponseDto) request.getSession().getAttribute("retailer");
     UserResponseDto supplier = (UserResponseDto) request.getSession().getAttribute("supplier");
-    List<ProductResponseDto> products = (List<ProductResponseDto>) request.getAttribute("products");
+    List<ProductResponseDto> products = (List<ProductResponseDto>) request.getSession().getAttribute("products");
+    String error = (String) request.getAttribute("error");
 
-    if (retailer == null && supplier == null) {
-        response.sendRedirect("login.jsp");
-    }
 %>
 <!DOCTYPE html>
 <html>
@@ -32,10 +30,17 @@
                 <img class="card-img-top" src="https://png.pngtree.com/png-clipart/20230110/ourlarge/pngtree-red-fresh-apple-fruit-png-image_6558133.png" alt="<%= product.getName() %>">
                 <div class="card-body">
                     <h5 class="card-title"><%= product.getName() %></h5>
-                    <h6 class="price">Price: $<%= product.getPrice() %></h6>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="price">Price: $<%= product.getPrice() %></h6>
+                        <h6 class="discount text-danger">Discount: <%= Math.round(product.getDiscount() * 100) %>%</h6>
+                    </div>
+                    <h6 class="total-price">Total Price: <%= String.format("%.2f",product.getPrice() * (1-product.getDiscount())) %></h6>
                     <div class="mt-3 d-flex justify-content-between">
-                        <a href="add-to-cart?id=<%=product.getId()%>" class="btn btn-dark">Add to Cart</a>
-                        <a href="#" class="btn btn-primary">Buy Now</a>
+                        <form action="private/add-to-cart" method="POST" class="d-flex">
+                            <input type="hidden" name="id" value="<%= product.getId() %>">
+                            <input class="quantity form-control ml-2" type="number" name="quantity" value="1" min="1">
+                            <button type="submit" class="btn btn-primary ml-2">Sepete Ekle</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -50,7 +55,6 @@
         %>
     </div>
 </div>
-
 <%@include file="includes/footer.jsp" %>
 </body>
 </html>
