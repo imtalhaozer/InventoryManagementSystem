@@ -1,5 +1,7 @@
 package com.example.inventorymanagementsystem.dto.response.retailer;
 
+import java.util.UUID;
+
 public class RetailerResponseDto {
     private String name;
     private String email;

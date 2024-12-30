@@ -23,9 +23,9 @@ public class RetailerService {
         return true;
     }
 
-    public RetailerResponseDto getRetailerByEmail(String email) {
+    public String getRetailerIdByEmail(String email) throws SQLException {
 
-        return reatilerDao.getRetailerByMail(email);
+        return reatilerDao.getRetailerIdByMail(email);
     }
 
     public RetailerResponseDto LoginRetailer(String email, String password) {

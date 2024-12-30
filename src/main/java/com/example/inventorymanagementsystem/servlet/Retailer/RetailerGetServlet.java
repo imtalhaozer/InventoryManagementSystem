@@ -13,12 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/retailer/get")
+@WebServlet("/private/retailer/get")
 public class RetailerGetServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private RetailerService retailerService;
-    private ObjectMapper objectMapper;
 
     @Override
     public void init() throws ServletException {
@@ -29,38 +28,16 @@ public class RetailerGetServlet extends HttpServlet {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        this.objectMapper = new ObjectMapper();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        RetailerResponseDto retailer = (RetailerResponseDto) request.getSession().getAttribute("retailer");
         try {
-            RetailerGetRequestDto requestDto = objectMapper.readValue(request.getReader(), RetailerGetRequestDto.class);
-
-            if (requestDto.getEmail()== null || requestDto.getEmail().isEmpty()) {
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                objectMapper.writeValue(response.getWriter(), "Error: Email is required.");
-                return;
-            }
-
-            RetailerResponseDto retailer = retailerService.getRetailerByEmail(requestDto.getEmail());
-
-            if (retailer == null || retailer.getEmail() == null) {
-                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                objectMapper.writeValue(response.getWriter(), "Error: Retailer not found.");
-                return;
-            }
-
-            response.setContentType("application/json");
-            response.setStatus(HttpServletResponse.SC_OK);
-            objectMapper.writeValue(response.getWriter(), retailer);
-
-        } catch (Exception e) {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.setContentType("application/json");
-            objectMapper.writeValue(response.getWriter(), "Error: " + e.getMessage());
-            e.printStackTrace();
+            retailerService.getRetailerIdByEmail(request.getParameter(retailer.getEmail()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

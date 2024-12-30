@@ -1,12 +1,14 @@
 package com.example.inventorymanagementsystem.dao;
 
 import com.example.inventorymanagementsystem.dto.response.retailer.RetailerResponseDto;
+import com.example.inventorymanagementsystem.models.Retailer;
 import com.example.inventorymanagementsystem.util.PasswordUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class ReatilerDao {
     private Connection con;
@@ -55,22 +57,19 @@ public class ReatilerDao {
         return isExist;
     }
 
-    public RetailerResponseDto getRetailerByMail(String email) {
-        RetailerResponseDto retailer = new RetailerResponseDto();
+    public String getRetailerIdByMail(String email) throws SQLException {
         try {
             query = "select * from Retailer where email=?";
             pst = this.con.prepareStatement(query);
             pst.setString(1, email);
             rs = pst.executeQuery();
             if (rs.next()) {
-                retailer.setName(rs.getString("name"));
-                retailer.setEmail(rs.getString("email"));
-                retailer.setPhoto(rs.getString("photo"));
+                rs.getString("id");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return retailer;
+        return rs.getString("id");
     }
 
     public RetailerResponseDto LoginRetailer(String email, String password) {
