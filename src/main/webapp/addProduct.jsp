@@ -3,6 +3,8 @@
 <%
   UserResponseDto retailer = (UserResponseDto) request.getSession().getAttribute("retailer");
   UserResponseDto supplier = (UserResponseDto) request.getSession().getAttribute("supplier");
+  String toastMessage = (String) request.getAttribute("toastMessage");
+  String toastType = (String) request.getAttribute("toastType");
   if (retailer == null && supplier == null) {
     response.sendRedirect("login.jsp");
   }
@@ -17,10 +19,22 @@
 <body>
 <%@include file="includes/navbar.jsp"%>
 <div class="container">
+  <% if (toastMessage != null) { %>
+  <div aria-live="polite" aria-atomic="true" style="position: fixed; top: 3rem; right: 1rem; z-index: 1050;">
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="mr-auto"><%= "success".equals(toastType) ? "Başarılı" : "Hata" %></strong>
+      </div>
+      <div class="toast-body">
+        <%= toastMessage %>
+      </div>
+    </div>
+  </div>
+  <% } %>
   <div class="card w-50 mx-auto my-5">
     <div class="card-header text-center">Product Registration</div>
     <div class="card-body">
-      <form id="product-register-form" method="post" action="private/add-product">
+      <form id="product-register-form" method="post" action="private-add-product">
         <div class="form-group">
           <label>Product Name</label>
           <input type="text" name="name" class="form-control" placeholder="Enter product name" required>

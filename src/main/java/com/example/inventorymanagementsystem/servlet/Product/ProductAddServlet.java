@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/private/add-product")
+@WebServlet("/private-add-product")
 public class ProductAddServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private  ProductService productService;
@@ -50,6 +50,14 @@ public class ProductAddServlet extends HttpServlet {
                     productCreateDto.getDiscount()
             );
 
+            if(isAdded){
+                request.setAttribute("toastMessage", "Product successfully added!");
+            }
+            else {
+                request.setAttribute("toastMessage", "Failed to add product!");
+            }
+            request.setAttribute("toastType", isAdded ? "success" : "error");
+            request.getRequestDispatcher("addProduct.jsp").forward(request, response);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
