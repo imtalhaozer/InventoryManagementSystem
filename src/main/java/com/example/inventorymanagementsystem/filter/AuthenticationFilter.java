@@ -18,7 +18,7 @@ public class AuthenticationFilter implements Filter {
 
         String uri = httpRequest.getRequestURI();
 
-        if (uri.startsWith("/InventoryManagementSystem_war_exploded/private/")) {
+        if (uri.contains("private")) {
             Cookie[] cookies = httpRequest.getCookies();
             boolean authenticated = false;
 
