@@ -2,11 +2,11 @@ package com.example.inventorymanagementsystem.models;
 
 public class CartItem {
     private Long id;
-    private Long cartId;
+    private String cartId;
     private Product product;
     private int quantity;
 
-    public CartItem(Long id, Long cartId, Product product, int quantity) {
+    public CartItem(Long id, String cartId, Product product, int quantity) {
         this.id = id;
         this.cartId = cartId;
         this.product = product;
@@ -21,11 +21,11 @@ public class CartItem {
         this.id = id;
     }
 
-    public Long getCartId() {
+    public String getCartId() {
         return cartId;
     }
 
-    public void setCartId(Long cartId) {
+    public void setCartId(String cartId) {
         this.cartId = cartId;
     }
 

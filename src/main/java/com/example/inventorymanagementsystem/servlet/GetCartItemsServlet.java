@@ -1,9 +1,7 @@
 package com.example.inventorymanagementsystem.servlet;
 
-import com.example.inventorymanagementsystem.dto.response.user.UserResponseDto;
+import com.example.inventorymanagementsystem.dto.cartItem.CartItemResponseDto;
 import com.example.inventorymanagementsystem.service.CartItemService;
-import com.example.inventorymanagementsystem.service.ProductService;
-import com.example.inventorymanagementsystem.service.RetailerService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,20 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-;
 import java.sql.SQLException;
+import java.util.List;
 
-
-@WebServlet("/private/add-to-cart")
-public class AddToCartServlet extends HttpServlet {
+@WebServlet("/private/get-cart-items")
+public class GetCartItemsServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private ProductService productService;
+
     private CartItemService cartItemService;
 
     @Override
     public void init() throws ServletException {
         try {
-            this.productService = new ProductService();
             this.cartItemService = new CartItemService();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -33,24 +29,24 @@ public class AddToCartServlet extends HttpServlet {
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String id = (String) request.getSession().getAttribute("cartId");
 
         try {
-            int productId = Integer.parseInt(request.getParameter("id"));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            List<CartItemResponseDto> cartItems = cartItemService.getCartItems(id);
+            double sum = 0;
+            for (CartItemResponseDto cartItem : cartItems) {
+                sum += cartItem.getProduct().getPrice() * cartItem.getQuantity()*(1-cartItem.getProduct().getDiscount());
+            }
 
+            request.setAttribute("sum", sum);
+            request.setAttribute("cartItems", cartItems);
+            request.getRequestDispatcher("/cart.jsp").forward(request, response);
 
-            boolean checkItem = cartItemService.checkItemForQuantity(id, productId, quantity);
-            if(!checkItem)
-                cartItemService.addCartItem(id, productId, quantity);
-
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
     }
+
 }
