@@ -1,6 +1,7 @@
 package com.example.inventorymanagementsystem.servlet;
 
 import com.example.inventorymanagementsystem.dto.response.user.UserResponseDto;
+import com.example.inventorymanagementsystem.service.RetailerService;
 import com.example.inventorymanagementsystem.service.UserService;
 
 import javax.servlet.ServletException;
@@ -17,11 +18,13 @@ public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private UserService userService;
+    private RetailerService retailerService;
 
     @Override
     public void init() throws ServletException {
         try {
             this.userService = new UserService();
+            this.retailerService = new RetailerService();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -45,6 +48,7 @@ public class LoginServlet extends HttpServlet {
 
                     if ("Retailer".equals(user.getRole())) {
                         request.getSession().setAttribute("retailer", user);
+                        request.getSession().setAttribute("cartId", retailerService.getRetailerIdByEmail(email));
                         response.sendRedirect("index.jsp");
                     } else if ("Supplier".equals(user.getRole())) {
                         request.getSession().setAttribute("supplier", user);
