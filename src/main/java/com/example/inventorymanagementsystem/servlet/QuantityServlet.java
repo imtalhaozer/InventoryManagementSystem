@@ -35,10 +35,10 @@ public class QuantityServlet extends HttpServlet {
                     cartItemService.checkItemForQuantity(id,productId,1);
                 }
                 }
-                else if(action.equals("dec")){
+                if(action.equals("dec")){
                     cartItemService.checkItemForQuantity(id,productId,-1);
                 }
-            response.sendRedirect(request.getContextPath() + "/private/get-cart-items");
+            response.sendRedirect(request.getContextPath() + "/private-get-cart-items");
         } catch (NumberFormatException e) {
             throw new RuntimeException(e);
         }

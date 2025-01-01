@@ -11,24 +11,37 @@
                     <i class="fas fa-home"></i> Home <span class="sr-only">(current)</span>
                 </a>
             </li>
+            <% if (retailer != null) { %>
             <li class="nav-item">
-                <a class="nav-link" href="<%= request.getContextPath() %>/private/get-cart-items">
+                <a class="nav-link" href="<%= request.getContextPath() %>/private-get-cart-items">
                     <i class="fas fa-shopping-cart"></i> Cart
                 </a>
             </li>
-            <% if (supplier != null) { %>
-            <li class="nav-item">
-                <a class="nav-link" href="addProduct.jsp">
-                    <i class="fa-solid fa-cube"></i> Add Product
-                </a>
-            </li>
-            <% }%>
-            <% if (retailer != null || supplier != null) { %>
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="fas fa-box"></i> Orders
                 </a>
             </li>
+            <% }%>
+            <% if (supplier != null) { %>
+            <li class="nav-item">
+                <a class="nav-link" href="addProduct.jsp">
+                    <i class="fa-solid fa-tag"></i> My Products
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="addProduct.jsp">
+                    <i class="fa-solid fa-cube"></i> Add Product
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="addProduct.jsp">
+                    <i class="fa-solid fa-circle-check"></i> Approve Orders
+                </a>
+            </li>
+            <% }%>
+            <% if (retailer != null || supplier != null) { %>
+
             <li class="nav-item">
                 <a class="nav-link" href="<%= request.getContextPath() %>/log-out">
                     <i class="fas fa-sign-out-alt"></i> Logout

@@ -35,7 +35,7 @@
 <div class="container">
     <div class="d-flex py-3">
         <h3> Total Price: $<%= String.format("%.2f",sum)  %> </h3>
-        <a class="mx-3 btn btn-primary" href="#">Check Out</a>
+        <a class="mx-3 btn btn-primary" href="private-checkout">Check Out</a>
     </div>
     <table class="table table-light">
         <thead>
@@ -57,14 +57,23 @@
             <td>
                 <form action="" method="post" class="from-inline">
                     <input type="hidden" name="id" value="<%=cart.getId()%>" class="form-input">
-                    <div class="form-group d-flex  w-10 h-5 ">
-                        <a class="btn btn-sm btn-incre" href="<%= request.getContextPath() %>/private/quantity?action=inc&id=<%= cart.getProduct().getId()%>"><i class="fas fa-plus-square" ></i></a>
-                        <input type="text" name="quantity"  class="form-control text-center" value="<%= cart.getQuantity() %>" readonly>
-                        <a class="btn btn-sm btn-decre" href="<%= request.getContextPath() %>/private/quantity?action=dec&id=<%= cart.getProduct().getId()%>"><i class="fas fa-minus-square" ></i></a>
+                    <div class="form-group d-flex w-10 h-5">
+                        <% if (cart.getQuantity() < cart.getProduct().getStockQuantity()) { %>
+                        <a class="btn btn-sm btn-incre" href="<%= request.getContextPath() %>/private/quantity?action=inc&id=<%= cart.getProduct().getId()%>">
+                            <i class="fas fa-plus-square"></i>
+                        </a>
+                        <% } %>
+                        <input type="text" name="quantity" class="form-control text-center" value="<%= cart.getQuantity() %>" readonly>
+                        <% if (cart.getQuantity() > 0) { %>
+                        <a class="btn btn-sm btn-decre" href="<%= request.getContextPath() %>/private/quantity?action=dec&id=<%= cart.getProduct().getId()%>">
+                            <i class="fas fa-minus-square"></i>
+                        </a>
+                        <% } %>
                     </div>
                 </form>
             </td>
-            <td><a href="remove-from-cart?id=<%= cart.getId()%>" class="btn btn-danger">Remove</a></td>
+
+            <td><a href="remove-from-cart?id=<%= cart.getProduct().getId()%>" class="btn btn-danger">Remove</a></td>
         </tr>
         <% } }%>
         </tbody>
