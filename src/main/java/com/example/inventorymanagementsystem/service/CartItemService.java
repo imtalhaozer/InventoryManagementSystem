@@ -28,5 +28,8 @@ public class CartItemService {
     public List<CartItemResponseDto> getCartItems(String cartId){
         return cartItemDao.getCartItemsByCartId(cartId);
     }
+    public void deleteCartItem(String cartId, Long productId){
+        cartItemDao.deleteCartItem(cartId, productId);
+    }
 
 }

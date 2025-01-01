@@ -105,4 +105,16 @@ public class CartItemDao {
         }
         return cartItems;
     }
+
+    public void deleteCartItem(String cartId, Long productId) {
+        try {
+            query = "delete from CartItem where cartId=? and productId=?";
+            pst = this.con.prepareStatement(query);
+            pst.setString(1, cartId);
+            pst.setLong(2, productId);
+            pst.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
