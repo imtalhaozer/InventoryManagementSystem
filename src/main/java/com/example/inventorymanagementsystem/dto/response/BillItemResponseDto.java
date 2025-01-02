@@ -1,15 +1,18 @@
-package com.example.inventorymanagementsystem.models;
+package com.example.inventorymanagementsystem.dto.response;
 
-public class BillItem {
+import com.example.inventorymanagementsystem.models.Product;
+
+public class BillItemResponseDto {
+
     private Long id;
-    private Long billId;
-    public Long productId;
+    private String billId;
+    private Long productId;
     private String productName;
     private double price;
     private int quantity;
     private boolean confirm;
 
-    public BillItem(Long id, Long billId, Long productId, String productName, double price, int quantity, boolean confirm) {
+    public BillItemResponseDto(Long id, String billId, Long productId, String productName, double price, int quantity, boolean confirm) {
         this.id = id;
         this.billId = billId;
         this.productId = productId;
@@ -27,11 +30,11 @@ public class BillItem {
         this.id = id;
     }
 
-    public Long getBillId() {
+    public String getBillId() {
         return billId;
     }
 
-    public void setBillId(Long billId) {
+    public void setBillId(String billId) {
         this.billId = billId;
     }
 
