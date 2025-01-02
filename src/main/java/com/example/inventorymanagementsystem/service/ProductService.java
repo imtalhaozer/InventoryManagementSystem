@@ -33,5 +33,16 @@ public class ProductService {
         return productDao.getAllProducts();
     }
 
+    public List<ProductResponseDto> getProductsBySupplierId(UUID supplierId) {
+        return productDao.getProductsBySupplierId(supplierId);
+    }
+
+    public void updateProduct(Long id,String name, int stockQuantity, double price, double discount) {
+        productDao.updateProduct(id,name, stockQuantity, price, discount);
+    }
+
+    public void removeProduct(Long id) {
+        productDao.removeProduct(id);
+    }
 
 }

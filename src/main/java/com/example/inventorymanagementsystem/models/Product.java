@@ -19,6 +19,14 @@ public class Product {
         this.discount = discount;
     }
 
+    public Product(Long id, String name, int stockQuantity, double price, double discount) {
+        this.id = id;
+        this.name = name;
+        this.stockQuantity = stockQuantity;
+        this.price = price;
+        this.discount = discount;
+    }
+
     public Long getId() {
         return id;
     }

@@ -25,7 +25,7 @@
             <% }%>
             <% if (supplier != null) { %>
             <li class="nav-item">
-                <a class="nav-link" href="addProduct.jsp">
+                <a class="nav-link" href="<%= request.getContextPath() %>/products-supplier">
                     <i class="fa-solid fa-tag"></i> My Products
                 </a>
             </li>
@@ -35,7 +35,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="addProduct.jsp">
+                <a class="nav-link" href="<%= request.getContextPath() %>/get-order-approvals">
                     <i class="fa-solid fa-circle-check"></i> Approve Orders
                 </a>
             </li>
