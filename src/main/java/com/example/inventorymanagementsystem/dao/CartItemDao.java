@@ -37,6 +37,23 @@ public class CartItemDao {
         }
     }
 
+    public int getCartItemQuantity(String cartId, int productId) {
+        try {
+            query = "select quantity from CartItem where cartId=? and productId=?";
+            pst = this.con.prepareStatement(query);
+            pst.setString(1, cartId);
+            pst.setInt(2, productId);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("quantity");
+            }
+            return 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     public boolean checkItemForQuantity(String cartId, int productId, int quantity) {
         try {
             query = "select * from CartItem where cartId=? and productId=?";

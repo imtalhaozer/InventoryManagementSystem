@@ -17,12 +17,15 @@ public class CartItemService {
         this.cartItemDao = new CartItemDao(con);
     }
 
-    public void addCartItem(String cartId, int productId, int quantity){
-        cartItemDao.saveCartItem(cartId, productId, quantity);
-    }
-
     public boolean checkItemForQuantity(String cartId, int productId, int quantity){
         return cartItemDao.checkItemForQuantity(cartId, productId, quantity);
+    }
+
+    public int getCartItemQuantity(String cartId, int productId){
+        return cartItemDao.getCartItemQuantity(cartId, productId);
+    }
+    public void addCartItem(String cartId, int productId, int quantity){
+            cartItemDao.saveCartItem(cartId, productId, quantity);
     }
 
     public List<CartItemResponseDto> getCartItems(String cartId){
