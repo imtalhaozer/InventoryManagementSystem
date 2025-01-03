@@ -1,4 +1,3 @@
-
 <%@ page import="com.example.inventorymanagementsystem.dto.response.user.UserResponseDto" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.inventorymanagementsystem.dto.response.Product.ProductResponseDto" %>
@@ -8,24 +7,41 @@
     UserResponseDto supplier = (UserResponseDto) request.getSession().getAttribute("supplier");
     List<ProductResponseDto> products = (List<ProductResponseDto>) request.getSession().getAttribute("products");
     String error = (String) request.getAttribute("error");
-
 %>
 <!DOCTYPE html>
 <html>
 <head>
     <%@include file="includes/head.jsp" %>
     <title>ITG - Management System</title>
+    <style>
+        .search-bar {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
 <%@include file="includes/navbar.jsp" %>
 <div class="container">
     <div class="card-header my-3">All Products</div>
-    <div class="row">
+
+    <!-- Search and Sort Options -->
+    <div class="search-bar d-flex justify-content-between">
+        <input type="text" id="searchInput" class="form-control w-50" placeholder="Search products by name..." onkeyup="filterProducts()">
+        <select id="sortOptions" class="form-select w-25" onchange="sortProducts()">
+            <option value="">Sort by</option>
+            <option value="priceLowHigh">Price: Low to High</option>
+            <option value="priceHighLow">Price: High to Low</option>
+            <option value="nameAZ">Name: A to Z</option>
+            <option value="nameZA">Name: Z to A</option>
+        </select>
+    </div>
+
+    <div class="row" id="productContainer">
         <%
             if (products != null && !products.isEmpty()) {
                 for (ProductResponseDto product : products) {
         %>
-        <div class="col-md-3">
+        <div class="col-md-3 product-card" data-name="<%= product.getName().toLowerCase() %>" data-price="<%= product.getPrice() %>">
             <div class="card w-100 mb-3" style="width: 18rem;">
                 <img class="card-img-top" src="https://png.pngtree.com/png-clipart/20230110/ourlarge/pngtree-red-fresh-apple-fruit-png-image_6558133.png" alt="<%= product.getName() %>">
                 <div class="card-body">
@@ -40,8 +56,7 @@
                         <form action="private/add-to-cart" method="POST" class="d-flex">
                             <input type="hidden" name="id" value="<%= product.getId() %>">
                             <input
-                                    class="quantity form-control ml-2"
-                                    type="number"
+                                    type="hidden"
                                     name="quantity"
                                     value="1"
                                     min="1"
@@ -65,9 +80,51 @@
     </div>
 </div>
 <%@include file="includes/footer.jsp" %>
-</body>
-</html>
+
 <script>
+    function filterProducts() {
+        const searchInput = document.getElementById("searchInput").value.toLowerCase();
+        const productCards = document.querySelectorAll(".product-card");
+
+        productCards.forEach(card => {
+            const productName = card.getAttribute("data-name");
+            if (productName.includes(searchInput)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+
+    function sortProducts() {
+        const sortOption = document.getElementById("sortOptions").value;
+        const productContainer = document.getElementById("productContainer");
+        const productCards = Array.from(document.querySelectorAll(".product-card"));
+
+        productCards.sort((a, b) => {
+            const priceA = parseFloat(a.getAttribute("data-price"));
+            const priceB = parseFloat(b.getAttribute("data-price"));
+            const nameA = a.getAttribute("data-name");
+            const nameB = b.getAttribute("data-name");
+
+            switch (sortOption) {
+                case "priceLowHigh":
+                    return priceA - priceB;
+                case "priceHighLow":
+                    return priceB - priceA;
+                case "nameAZ":
+                    return nameA.localeCompare(nameB);
+                case "nameZA":
+                    return nameB.localeCompare(nameA);
+                default:
+                    return 0;
+            }
+        });
+
+        productContainer.innerHTML = "";
+        productCards.forEach(card => productContainer.appendChild(card));
+    }
+
     function checkMaxValue(input, max) {
         if (parseInt(input.value) > max) {
             input.value = max;
@@ -75,3 +132,5 @@
         }
     }
 </script>
+</body>
+</html>
