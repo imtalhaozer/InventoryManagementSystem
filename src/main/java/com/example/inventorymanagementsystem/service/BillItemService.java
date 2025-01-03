@@ -5,6 +5,7 @@ import com.example.inventorymanagementsystem.dao.ProductDao;
 import com.example.inventorymanagementsystem.dto.cartItem.CartItemResponseDto;
 import com.example.inventorymanagementsystem.dto.response.BillItemResponseDto;
 import com.example.inventorymanagementsystem.dto.response.Product.ProductResponseDto;
+import com.example.inventorymanagementsystem.models.BillItemStatusEnum;
 import com.example.inventorymanagementsystem.models.Product;
 import com.example.inventorymanagementsystem.util.DbCon;
 
@@ -27,14 +28,24 @@ public class BillItemService {
         billItemDao.addBillItem(billId,cartItems);
     }
 
-    public void confirmBillItem(Long id) {
+    public void confirmBillItem(Long id, BillItemStatusEnum status) {
         BillItemResponseDto billItem = billItemDao.getBillItemById(id);
-        productDao.decreaseStockQuantity(billItem.getProductId(), billItem.getQuantity());
-        billItemDao.confirmBillItem(id);
+        if (status == BillItemStatusEnum.CONFIRMED) {
+            productDao.decreaseStockQuantity(billItem.getProductId(), billItem.getQuantity());
+        }
+        billItemDao.confirmBillItem(id, status);
     }
 
     public List<BillItemResponseDto> getBillItemsSupplier(UUID supplierId) {
         List<Long> productIds = productDao.getProductIdListBySupplierId(supplierId);
         return billItemDao.getBillItemsByProductId(productIds);
+    }
+
+    public void deleteBillItem(Long id) {
+        billItemDao.deleteBillItem(id);
+    }
+
+    public List<BillItemResponseDto> getBillItemsByBillId(String billId) {
+        return billItemDao.getBillItemsByBillId(billId);
     }
 }

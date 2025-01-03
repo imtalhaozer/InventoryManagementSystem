@@ -7,9 +7,9 @@ public class BillItem {
     private String productName;
     private double price;
     private int quantity;
-    private boolean confirm;
+    private BillItemStatusEnum confirm;
 
-    public BillItem(Long id, Long billId, Long productId, String productName, double price, int quantity, boolean confirm) {
+    public BillItem(Long id, Long billId, Long productId, String productName, double price, int quantity, BillItemStatusEnum confirm) {
         this.id = id;
         this.billId = billId;
         this.productId = productId;
@@ -67,11 +67,11 @@ public class BillItem {
         this.quantity = quantity;
     }
 
-    public boolean isConfirm() {
+    public BillItemStatusEnum getConfirm() {
         return confirm;
     }
 
-    public void setConfirm(boolean confirm) {
+    public void setConfirm(BillItemStatusEnum confirm) {
         this.confirm = confirm;
     }
 }
