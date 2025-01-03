@@ -18,7 +18,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="<%= request.getContextPath() %>/get-orders">
                     <i class="fas fa-box"></i> Orders
                 </a>
             </li>

@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
                         response.sendRedirect("index.jsp");
                     } else if ("Supplier".equals(user.getRole())) {
                         request.getSession().setAttribute("supplier", user);
-                        response.sendRedirect("index.jsp");
+                        response.sendRedirect(request.getContextPath() + "/public-product-get-all");
                     }
 
                 } else {

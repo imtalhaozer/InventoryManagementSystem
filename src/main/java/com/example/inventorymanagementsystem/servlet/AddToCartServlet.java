@@ -46,7 +46,7 @@ public class AddToCartServlet extends HttpServlet {
             if(!checkItem)
                 cartItemService.addCartItem(id, productId, quantity);
 
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            response.sendRedirect(request.getContextPath() + "/public-product-get-all");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
