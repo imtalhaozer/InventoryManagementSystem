@@ -1,5 +1,6 @@
 package com.example.inventorymanagementsystem.servlet;
 
+import com.example.inventorymanagementsystem.models.BillItemStatusEnum;
 import com.example.inventorymanagementsystem.service.BillItemService;
 
 import javax.servlet.ServletException;
@@ -29,9 +30,18 @@ public class ConfirmBillItemServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long id = Long.parseLong(request.getParameter("id"));
+        boolean success = Boolean.parseBoolean(request.getParameter("success"));
 
         try {
-            billItemService.confirmBillItem(id);
+            if (success) {
+                billItemService.confirmBillItem(id, BillItemStatusEnum.CONFIRMED);
+            } else if(!success){
+                billItemService.confirmBillItem(id, BillItemStatusEnum.NOT_CONFIRMED);
+            }
+            else {
+                billItemService.confirmBillItem(id, BillItemStatusEnum.UNCERTAIN);
+            }
+            response.sendRedirect(request.getContextPath() + "/get-order-approvals");
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
