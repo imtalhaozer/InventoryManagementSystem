@@ -82,7 +82,7 @@ public class CartItemDao {
         List<CartItemResponseDto> cartItems = new ArrayList<>();
         String query =
                 "SELECT ci.id AS cartItemId, ci.cartId, ci.productId, ci.quantity, " +
-                        "p.id AS productId, p.supplierId, p.name, p.stockQuantity, p.price, p.discount " +
+                        "p.id AS productId, p.supplierId, p.name, p.stockQuantity, p.price, p.discount, p.description " +
                         "FROM CartItem ci " +
                         "JOIN Product p ON ci.productId = p.id " +
                         "WHERE ci.cartId = ?";
@@ -99,7 +99,8 @@ public class CartItemDao {
                         rs.getString("name"),
                         rs.getInt("stockQuantity"),
                         rs.getDouble("price"),
-                        rs.getDouble("discount")
+                        rs.getDouble("discount"),
+                        rs.getString("description")
                 );
                 CartItemResponseDto cartItem = new CartItemResponseDto(
                         rs.getLong("cartItemId"),

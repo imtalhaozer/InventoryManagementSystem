@@ -34,7 +34,7 @@
   <div class="card w-50 mx-auto my-5">
     <div class="card-header text-center">Product Registration</div>
     <div class="card-body">
-      <form id="product-register-form" method="post" action="private-add-product">
+      <form id="product-register-form" method="post" enctype="multipart/form-data" action="private-add-product">
         <div class="form-group">
           <label>Product Name</label>
           <input type="text" name="name" class="form-control" placeholder="Enter product name" required>
@@ -51,10 +51,14 @@
           <label>Discount (%)</label>
           <input type="number" step="0.01" name="discount" class="form-control" placeholder="Enter discount percentage" required>
         </div>
-
+        <div class="form-group">
+          <label>Description</label>
+          <input type="text" name="description" class="form-control" placeholder="Enter description" required>
+        </div>
         <div class="form-group">
           <label>Product Image</label>
           <input type="file" name="photo" class="form-control-file" accept="image/*">
+          <input type="file" name="photo2" class="form-control-file" accept="image/*">
         </div>
         <div class="text-center">
           <button type="submit" class="btn btn-primary">Register Product</button>

@@ -6,6 +6,7 @@ import com.example.inventorymanagementsystem.service.ProductService;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,7 +28,9 @@ public class ProductGetServlet extends HttpServlet {
         }
     }
 
-    public void doGet(HttpServletRequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String id = request.getParameter("id");
         if (id == null) {
@@ -43,9 +46,11 @@ public class ProductGetServlet extends HttpServlet {
             }
 
             request.setAttribute("product", product);
+            request.getRequestDispatcher("/product.jsp").forward(request, response);
         } catch (Exception e) {
             response.setStatus(500);
         }
     }
+
 
 }

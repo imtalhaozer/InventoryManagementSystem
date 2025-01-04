@@ -17,6 +17,11 @@
         .search-bar {
             margin-bottom: 20px;
         }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -24,7 +29,6 @@
 <div class="container">
     <div class="card-header my-3">All Products</div>
 
-    <!-- Search and Sort Options -->
     <div class="search-bar d-flex justify-content-between">
         <input type="text" id="searchInput" class="form-control w-50" placeholder="Search products by name..." onkeyup="filterProducts()">
         <select id="sortOptions" class="form-select w-25" onchange="sortProducts()">
@@ -43,9 +47,15 @@
         %>
         <div class="col-md-3 product-card" data-name="<%= product.getName().toLowerCase() %>" data-price="<%= product.getPrice() %>">
             <div class="card w-100 mb-3" style="width: 18rem;">
-                <img class="card-img-top" src="https://png.pngtree.com/png-clipart/20230110/ourlarge/pngtree-red-fresh-apple-fruit-png-image_6558133.png" alt="<%= product.getName() %>">
+                <% if(product.getImageUrlList() != null && !product.getImageUrlList().isEmpty()) { %>
+                <img class="card-img-top" src="<%=product.getImageUrlList().get(0) %>" alt="<%= product.getName() %>">
+                <% } %>
                 <div class="card-body">
-                    <h5 class="card-title"><%= product.getName() %></h5>
+                    <h5 class="card-title">
+                        <a href="<%= request.getContextPath() %>/public-product-get?id=<%= product.getId() %>" class="text-decoration-none">
+                            <%= product.getName() %>
+                        </a>
+                    </h5>
                     <div class="d-flex justify-content-between">
                         <h6 class="price">Price: $<%= product.getPrice() %></h6>
                         <h6 class="discount text-danger">Discount: <%= Math.round(product.getDiscount() * 100) %>%</h6>

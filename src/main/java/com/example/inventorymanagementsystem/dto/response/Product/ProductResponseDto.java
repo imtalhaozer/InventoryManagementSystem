@@ -1,5 +1,6 @@
 package com.example.inventorymanagementsystem.dto.response.Product;
 
+import java.util.List;
 import java.util.UUID;
 
 public class ProductResponseDto {
@@ -9,18 +10,23 @@ public class ProductResponseDto {
     private int stockQuantity;
     private double price;
     private double discount;
+    private String description;
+    private List<String> imageUrlList;
+
+
 
 
     public ProductResponseDto() {
     }
 
-    public ProductResponseDto(Long id, UUID supplierId, String name, int stockQuantity, double price, double discount) {
+    public ProductResponseDto(Long id, UUID supplierId, String name, int stockQuantity, double price, double discount, String description) {
         this.id = id;
         this.supplierId = supplierId;
         this.name = name;
         this.stockQuantity = stockQuantity;
         this.price = price;
         this.discount = discount;
+        this.description = description;
     }
 
     public Long getId() {
@@ -69,5 +75,21 @@ public class ProductResponseDto {
 
     public void setDiscount(double discount) {
         this.discount = discount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<String> getImageUrlList() {
+        return imageUrlList;
+    }
+
+    public void setImageUrlList(List<String> imageUrlList) {
+        this.imageUrlList = imageUrlList;
     }
 }

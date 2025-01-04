@@ -36,6 +36,7 @@ public class ProductDao {
                 product.setStockQuantity(rs.getInt("stockQuantity"));
                 product.setPrice(rs.getDouble("price"));
                 product.setDiscount(rs.getDouble("discount"));
+                product.setDescription(rs.getString("description"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,16 +44,17 @@ public class ProductDao {
         return product;
     }
 
-    public void addProduct(UUID supplierId, String name, int stockQuantity, double price, double discount) {
+    public void addProduct(UUID supplierId, String name, int stockQuantity, double price, double discount, String description) {
         try {
 
-            query = "insert into Product(supplierId, name, stockQuantity, price, discount) values(?,?,?,?,?)";
+            query = "insert into Product(supplierId, name, stockQuantity, price, discount, description) values(?,?,?,?,?,?)";
             pst = this.con.prepareStatement(query);
             pst.setString(1, supplierId.toString());
             pst.setString(2, name);
             pst.setInt(3, stockQuantity);
             pst.setDouble(4, price);
             pst.setDouble(5, discount);
+            pst.setString(6, description);
             pst.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,6 +90,7 @@ public class ProductDao {
                 product.setStockQuantity(rs.getInt("stockQuantity"));
                 product.setPrice(rs.getDouble("price"));
                 product.setDiscount(rs.getDouble("discount"));
+                product.setDescription(rs.getString("description"));
                 products.add(product);
             }
         } catch (Exception e) {
@@ -111,6 +114,7 @@ public class ProductDao {
                 product.setStockQuantity(rs.getInt("stockQuantity"));
                 product.setPrice(rs.getDouble("price"));
                 product.setDiscount(rs.getDouble("discount"));
+                product.setDescription(rs.getString("description"));
                 products.add(product);
             }
         } catch (Exception e) {
@@ -172,5 +176,21 @@ public class ProductDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Long getIdByName(String name){
+        Long id = null;
+        try {
+            query = "select id from Product where name=?";
+            pst = this.con.prepareStatement(query);
+            pst.setString(1, name);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                id = rs.getLong("id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 }

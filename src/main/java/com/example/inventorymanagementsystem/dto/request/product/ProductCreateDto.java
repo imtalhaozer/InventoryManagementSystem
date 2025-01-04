@@ -8,17 +8,20 @@ public class ProductCreateDto {
     private int stockQuantity;
     private double price;
     private double discount;
+    private String description;
 
     public ProductCreateDto() {
     }
 
-    public ProductCreateDto(UUID supplierId, String name, int stockQuantity, double price, double discount) {
+    public ProductCreateDto(UUID supplierId, String name, int stockQuantity, double price, double discount, String description) {
         this.supplierId = supplierId;
         this.name = name;
         this.stockQuantity = stockQuantity;
         this.price = price;
         this.discount = discount;
+        this.description = description;
     }
+
     public UUID getSupplierId() {
         return supplierId;
     }
@@ -57,5 +60,13 @@ public class ProductCreateDto {
 
     public void setDiscount(double discount) {
         this.discount = discount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -9,22 +9,19 @@ public class Product {
     private int stockQuantity;
     private double price;
     private double discount;
+    private String description;
 
-    public Product(Long id, UUID supplierId, String name, int stockQuantity, double price, double discount) {
+    public Product() {
+    }
+
+    public Product(Long id, UUID supplierId, String name, int stockQuantity, double price, double discount, String description) {
         this.id = id;
         this.supplierId = supplierId;
         this.name = name;
         this.stockQuantity = stockQuantity;
         this.price = price;
         this.discount = discount;
-    }
-
-    public Product(Long id, String name, int stockQuantity, double price, double discount) {
-        this.id = id;
-        this.name = name;
-        this.stockQuantity = stockQuantity;
-        this.price = price;
-        this.discount = discount;
+        this.description = description;
     }
 
     public Long getId() {
@@ -73,5 +70,13 @@ public class Product {
 
     public void setDiscount(double discount) {
         this.discount = discount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

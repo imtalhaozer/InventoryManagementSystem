@@ -23,7 +23,7 @@
     <div aria-live="polite" aria-atomic="true" style="position: fixed; top: 3rem; right: 1rem; z-index: 1050;">
         <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
-                <strong class="mr-auto"><%= "success".equals(toastType) ? "Başarılı" : "Hata" %></strong>
+                <strong class="mr-auto"><%= "success".equals(toastType) ? "Successful" : "Something wrong" %></strong>
             </div>
             <div class="toast-body">
                 <%= toastMessage %>
