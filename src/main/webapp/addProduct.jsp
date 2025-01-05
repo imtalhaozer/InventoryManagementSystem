@@ -41,15 +41,15 @@
         </div>
         <div class="form-group">
           <label>Stock Quantity</label>
-          <input type="number" name="stockQuantity" class="form-control" placeholder="Enter stock quantity" required>
+          <input type="number" name="stockQuantity" class="form-control" placeholder="Enter stock quantity" min="0" step="1" required>
         </div>
         <div class="form-group">
           <label>Price</label>
-          <input type="number" step="0.01" name="price" class="form-control" placeholder="Enter product price" required>
+          <input type="number" name="price" class="form-control" placeholder="Enter product price" min="0" step="0.01" required>
         </div>
         <div class="form-group">
           <label>Discount (%)</label>
-          <input type="number" step="0.01" name="discount" class="form-control" placeholder="Enter discount percentage" required>
+          <input type="number" name="discount" class="form-control" placeholder="Enter discount percentage" min="0" max="99" step="0.01" required>
         </div>
         <div class="form-group">
           <label>Description</label>

@@ -47,9 +47,9 @@
 
 
         <td><input type="text" class="form-control" name="name" value="<%= product.getName() %>"></td>
-        <td><input type="number" class="form-control" name="stockQuantity" value="<%= product.getStockQuantity() %>"></td>
-        <td><input type="number" class="form-control" name="price" value="<%= product.getPrice() %>"></td>
-        <td><input type="number" class="form-control" name="discount" value="<%= product.getDiscount() %>"></td>
+        <td><input type="number" class="form-control" min="0" name="stockQuantity" value="<%= product.getStockQuantity() %>"></td>
+        <td><input type="number" class="form-control" min="0" name="price" value="<%= product.getPrice() %>"></td>
+        <td><input type="number" class="form-control" name="discount" min="0.00" max="0.99" step="0.01" value="<%= product.getDiscount() %>"></td>
 
         <td><button type="submit" class="btn btn-primary">Update</button></td>
 

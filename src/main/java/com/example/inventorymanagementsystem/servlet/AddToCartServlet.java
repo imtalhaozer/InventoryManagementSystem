@@ -50,7 +50,5 @@ public class AddToCartServlet extends HttpServlet {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
     }
 }
