@@ -1,6 +1,7 @@
 package com.example.inventorymanagementsystem.service;
 
 import com.example.inventorymanagementsystem.dao.ReatilerDao;
+import com.example.inventorymanagementsystem.dto.request.retailer.RetailerCreateDto;
 import com.example.inventorymanagementsystem.dto.response.retailer.RetailerResponseDto;
 import com.example.inventorymanagementsystem.util.DbCon;
 
@@ -15,11 +16,11 @@ public class RetailerService {
         this.reatilerDao = new ReatilerDao(con);
     }
 
-    public boolean registerRetailer(String name, String email, String password, String photo) {
-        if (reatilerDao.isRetailerMailExist(email)) {
+    public boolean registerRetailer(RetailerCreateDto retailerCreateDto) {
+        if (reatilerDao.isRetailerMailExist(retailerCreateDto.getEmail())) {
             return false;
         }
-        reatilerDao.addRetailer(name, email, password, photo);
+        reatilerDao.addRetailer(retailerCreateDto);
         return true;
     }
 

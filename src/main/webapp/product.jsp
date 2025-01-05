@@ -6,6 +6,7 @@
     UserResponseDto retailer = (UserResponseDto) request.getSession().getAttribute("retailer");
     UserResponseDto supplier = (UserResponseDto) request.getSession().getAttribute("supplier");
     ProductResponseDto product = (ProductResponseDto) request.getAttribute("product");
+    String baseImage= "https://media.licdn.com/dms/image/v2/C560BAQE9U_RVSFeJow/company-logo_200_200/company-logo_200_200/0/1630628233729?e=1744243200&v=beta&t=3Im6F2zYieT_m7_oSMx3gXPozmdkOq2HBMp8_Cw1vIs";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,12 +69,25 @@
         <div class="product-slider">
             <div id="productCarousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-                    <% for (int i = 0; i < product.getImageUrlList().size(); i++) { %>
+                    <%
+                        List<String> imageUrls = product.getImageUrlList();
+                        boolean hasImages = imageUrls != null && !imageUrls.isEmpty();
+                        if (hasImages) {
+                            for (int i = 0; i < imageUrls.size(); i++) {
+                    %>
                     <div class="carousel-item <%= i == 0 ? "active" : "" %>">
-                        <img src="<%= product.getImageUrlList().get(i) %>" class="d-block w-100" alt="Product Image">
+                        <img src="<%= imageUrls.get(i) %>" class="d-block w-100" alt="Product Image">
+                    </div>
+                    <%
+                        }
+                    } else {
+                    %>
+                    <div class="carousel-item active">
+                        <img src="<%= baseImage %>" class="d-block w-100" alt="Default Product Image">
                     </div>
                     <% } %>
                 </div>
+                <% if (hasImages) { %>
                 <a class="carousel-control-prev" href="#productCarousel" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -82,13 +96,16 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
+                <% } %>
             </div>
         </div>
+
 
         <div class="product-details">
             <h2><%= product.getName() %></h2>
             <p>Stock: <%= product.getStockQuantity() %></p>
             <p>Price: <del>$<%= String.format("%.2f", product.getPrice()) %></del> <strong>$<%= String.format("%.2f", (product.getPrice()* (1-product.getDiscount()))) %></strong></p>
+            <% if (retailer != null) { %>
             <form action="private/add-to-cart" method="POST" >
                 <input type="hidden" name="id" value="<%= product.getId() %>">
                 <input
@@ -100,7 +117,8 @@
                         oninput="checkMaxValue(this, <%= product.getStockQuantity() %>)">
                 <button type="submit" class="btn btn-primary ml-2">Add to Cart</button>
             </form>
-            <p><strong>Description:</strong> <%= product.getDescription() != null ? product.getDescription() : "No description available." %></p>
+            <% } %>
+            <p class="mt-5"><strong>Description:</strong> <%= product.getDescription() != null ? product.getDescription() : "No description available." %></p>
         </div>
     </div>
 </div>

@@ -7,6 +7,7 @@
     UserResponseDto supplier = (UserResponseDto) request.getSession().getAttribute("supplier");
     List<ProductResponseDto> products = (List<ProductResponseDto>) request.getSession().getAttribute("products");
     String error = (String) request.getAttribute("error");
+    String baseImage= "https://media.licdn.com/dms/image/v2/C560BAQE9U_RVSFeJow/company-logo_200_200/company-logo_200_200/0/1630628233729?e=1744243200&v=beta&t=3Im6F2zYieT_m7_oSMx3gXPozmdkOq2HBMp8_Cw1vIs";
 %>
 <!DOCTYPE html>
 <html>
@@ -47,9 +48,12 @@
         %>
         <div class="col-md-3 product-card" data-name="<%= product.getName().toLowerCase() %>" data-price="<%= product.getPrice() %>">
             <div class="card w-100 mb-3" style="width: 18rem;">
-                <% if(product.getImageUrlList() != null && !product.getImageUrlList().isEmpty()) { %>
-                <img class="card-img-top" src="<%=product.getImageUrlList().get(0) %>" alt="<%= product.getName() %>">
-                <% } %>
+                <%
+                    String imageUrl = (product.getImageUrlList() != null && !product.getImageUrlList().isEmpty())
+                            ? product.getImageUrlList().get(0)
+                            : baseImage;
+                %>
+                <img class="card-img-top" src="<%= imageUrl %>" alt="<%= product.getName() %>">
                 <div class="card-body">
                     <h5 class="card-title">
                         <a href="<%= request.getContextPath() %>/public-product-get?id=<%= product.getId() %>" class="text-decoration-none">
