@@ -34,7 +34,7 @@ public class ProductRemoveServlet extends HttpServlet {
             productService.removeProduct(id);
             response.sendRedirect(request.getContextPath()+"/products-supplier");
         } catch (Exception e) {
-            response.setStatus(500);
+            e.printStackTrace();
         }
     }
 }

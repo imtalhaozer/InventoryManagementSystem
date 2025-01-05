@@ -1,6 +1,6 @@
 package com.example.inventorymanagementsystem.servlet.Product;
 
-import com.example.inventorymanagementsystem.dto.request.product.ProductCreateDto;
+import com.example.inventorymanagementsystem.dto.request.product.ProductRequestDto;
 import com.example.inventorymanagementsystem.dto.response.user.UserResponseDto;
 import com.example.inventorymanagementsystem.service.ProductImageService;
 import com.example.inventorymanagementsystem.service.ProductService;
@@ -21,7 +21,7 @@ import java.sql.SQLException;
 @MultipartConfig
 public class ProductAddServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private  ProductService productService;
+    private ProductService productService;
     private ProductImageService productImageService;
 
     @Override
@@ -29,10 +29,8 @@ public class ProductAddServlet extends HttpServlet {
         try {
             this.productService = new ProductService();
             this.productImageService = new ProductImageService();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException("Failed to initialize services", e);
         }
     }
 
@@ -40,56 +38,81 @@ public class ProductAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         UserResponseDto supplier = (UserResponseDto) request.getSession().getAttribute("supplier");
+
+        if (supplier == null) {
+            handleError(request, response, "User is not logged in", "error");
+            return;
+        }
+
         try {
-            String name = request.getParameter("name");
-            int stockQuantity = Integer.parseInt(request.getParameter("stockQuantity"));
-            double price = Double.parseDouble(request.getParameter("price"));
-            double discount = Double.parseDouble(request.getParameter("discount"));
-            String description = request.getParameter("description");
+            ProductRequestDto productRequestDto = extractProductData(request, supplier);
+            File tempFile1 = saveUploadedFile(request.getPart("photo"));
+            File tempFile2 = saveUploadedFile(request.getPart("photo2"));
 
-            Part filePart1 = request.getPart("photo");
-            File tempFile1 = new File(System.getProperty("java.io.tmpdir"), filePart1.getSubmittedFileName());
-            filePart1.write(tempFile1.getAbsolutePath());
+            boolean isAdded = addProductAndImages(productRequestDto, tempFile1, tempFile2);
 
-            Part filePart2 = request.getPart("photo2");
-            File tempFile2 = null;
-            if (filePart2 != null && filePart2.getSize() > 0) {
-                tempFile2 = new File(System.getProperty("java.io.tmpdir"), filePart2.getSubmittedFileName());
-                filePart2.write(tempFile2.getAbsolutePath());
-            }
+            handleSuccess(request, response, isAdded, tempFile1, tempFile2);
 
-            ProductCreateDto productCreateDto = new ProductCreateDto(supplier.getId(),name, stockQuantity, price, discount, description);
-
-            boolean isAdded = productService.addProduct(
-                    productCreateDto.getSupplierId(),
-                    productCreateDto.getName(),
-                    productCreateDto.getStockQuantity(),
-                    productCreateDto.getPrice(),
-                    productCreateDto.getDiscount(),
-                    productCreateDto.getDescription()
-            );
-
-            productImageService.addProductImage(productService.getIdByName(name), tempFile1);
-
-            if (tempFile2 != null) {
-                productImageService.addProductImage(productService.getIdByName(name), tempFile2);
-            }
-
-            if(isAdded){
-                request.setAttribute("toastMessage", "Product successfully added!");
-            }
-            else {
-                request.setAttribute("toastMessage", "Failed to add product!");
-            }
-            request.setAttribute("toastType", isAdded ? "success" : "error");
-            request.getRequestDispatcher("addProduct.jsp").forward(request, response);
-
-            tempFile1.delete();
-            if (tempFile2 != null) {
-                tempFile2.delete();
-            }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to process product addition", e);
+        }
+    }
+
+    private ProductRequestDto extractProductData(HttpServletRequest request, UserResponseDto supplier) throws NumberFormatException {
+        String name = request.getParameter("name");
+        int stockQuantity = Integer.parseInt(request.getParameter("stockQuantity"));
+        double price = Double.parseDouble(request.getParameter("price"));
+        double discount = Double.parseDouble(request.getParameter("discount"));
+        String description = request.getParameter("description");
+
+        return new ProductRequestDto(supplier.getId(), name, stockQuantity, price, discount, description);
+    }
+
+    private File saveUploadedFile(Part filePart) throws IOException {
+        if (filePart == null || filePart.getSize() == 0) {
+            return null;
+        }
+
+        File tempFile = new File(System.getProperty("java.io.tmpdir"), filePart.getSubmittedFileName());
+        filePart.write(tempFile.getAbsolutePath());
+        return tempFile;
+    }
+
+    private boolean addProductAndImages(ProductRequestDto productRequestDto, File tempFile1, File tempFile2) throws Exception {
+        boolean isAdded = productService.addProduct(productRequestDto);
+
+        if (isAdded) {
+            Long productId = productService.getIdByName(productRequestDto.getName());
+            productImageService.addProductImage(productId, tempFile1);
+
+            if (tempFile2 != null) {
+                productImageService.addProductImage(productId, tempFile2);
+            }
+        }
+
+        return isAdded;
+    }
+
+    private void handleSuccess(HttpServletRequest request, HttpServletResponse response, boolean isAdded, File tempFile1, File tempFile2) throws ServletException, IOException {
+        request.setAttribute("toastMessage", isAdded ? "Product successfully added!" : "Failed to add product!");
+        request.setAttribute("toastType", isAdded ? "success" : "error");
+        request.getRequestDispatcher("addProduct.jsp").forward(request, response);
+
+        cleanupTempFiles(tempFile1, tempFile2);
+    }
+
+    private void handleError(HttpServletRequest request, HttpServletResponse response, String message, String toastType) throws ServletException, IOException {
+        request.setAttribute("toastMessage", message);
+        request.setAttribute("toastType", toastType);
+        request.getRequestDispatcher("error.jsp").forward(request, response);
+    }
+
+    private void cleanupTempFiles(File... files) {
+        for (File file : files) {
+            if (file != null && file.exists()) {
+                file.delete();
+            }
         }
     }
 }
+

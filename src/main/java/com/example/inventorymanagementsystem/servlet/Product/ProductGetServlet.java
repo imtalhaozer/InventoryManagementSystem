@@ -33,19 +33,12 @@ public class ProductGetServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String id = request.getParameter("id");
-        if (id == null) {
-            response.setStatus(400);
-            return;
-        }
         try {
             Long productId = Long.parseLong(id);
             ProductResponseDto product = productService.getProductById(productId);
-            if (product == null) {
-                response.setStatus(404);
-                return;
-            }
 
             request.setAttribute("product", product);
+
             request.getRequestDispatcher("/product.jsp").forward(request, response);
         } catch (Exception e) {
             response.setStatus(500);

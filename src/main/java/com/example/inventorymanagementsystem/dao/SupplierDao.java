@@ -1,6 +1,7 @@
 package com.example.inventorymanagementsystem.dao;
 
 
+import com.example.inventorymanagementsystem.dto.request.supplier.SupplierCreateDto;
 import com.example.inventorymanagementsystem.dto.response.supplier.SupplierResponseDto;
 import com.example.inventorymanagementsystem.util.PasswordUtils;
 
@@ -22,16 +23,16 @@ public class SupplierDao {
         this.con = con;
     }
 
-    public void addSupplier(String name, String email, String password, String photo) {
-        String hashedPassword = PasswordUtils.hashPassword(password);
+    public void addSupplier(SupplierCreateDto supplierCreateDto) {
+        String hashedPassword = PasswordUtils.hashPassword(supplierCreateDto.getPassword());
         try {
             query = "insert into Supplier(id, name, email, password, photo) values(?,?,?,?,?)";
             pst = this.con.prepareStatement(query);
             pst.setString(1, java.util.UUID.randomUUID().toString());
-            pst.setString(2, name);
-            pst.setString(3, email);
+            pst.setString(2, supplierCreateDto.getName());
+            pst.setString(3, supplierCreateDto.getEmail());
             pst.setString(4, hashedPassword);
-            pst.setString(5, photo);
+            pst.setString(5, supplierCreateDto.getPhoto());
             pst.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,19 +1,35 @@
 package com.example.inventorymanagementsystem.dto.request.product;
 
+import javax.validation.constraints.*;
 import java.util.UUID;
 
-public class ProductCreateDto {
+public class ProductRequestDto {
+
+    @NotNull(message = "Supplier ID cannot be null")
     private UUID supplierId;
+
+    @NotNull(message = "Name cannot be null")
+    @NotEmpty(message = "Name cannot be empty")
+    @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
     private String name;
+
+    @PositiveOrZero(message = "Stock quantity must be zero or positive")
     private int stockQuantity;
+
+    @Positive(message = "Price must be positive")
     private double price;
+
+    @PositiveOrZero(message = "Discount must be zero or positive")
+    @Max(value = 100, message = "Discount cannot exceed 100%")
     private double discount;
+
+    @Size(max = 500, message = "Description cannot exceed 500 characters")
     private String description;
 
-    public ProductCreateDto() {
+    public ProductRequestDto() {
     }
 
-    public ProductCreateDto(UUID supplierId, String name, int stockQuantity, double price, double discount, String description) {
+    public ProductRequestDto(UUID supplierId, String name, int stockQuantity, double price, double discount, String description) {
         this.supplierId = supplierId;
         this.name = name;
         this.stockQuantity = stockQuantity;
@@ -21,6 +37,7 @@ public class ProductCreateDto {
         this.discount = discount;
         this.description = description;
     }
+
 
     public UUID getSupplierId() {
         return supplierId;

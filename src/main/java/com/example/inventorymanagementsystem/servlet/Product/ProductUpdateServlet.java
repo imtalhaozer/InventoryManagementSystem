@@ -1,5 +1,6 @@
 package com.example.inventorymanagementsystem.servlet.Product;
 
+import com.example.inventorymanagementsystem.dto.request.product.ProductUpdateDto;
 import com.example.inventorymanagementsystem.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -28,24 +29,26 @@ public class ProductUpdateServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Long id = Long.parseLong(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String stockQuantity = request.getParameter("stockQuantity");
-        String price = request.getParameter("price");
-        String discount = request.getParameter("discount");
-        if (name == null || stockQuantity == null || price == null || discount == null) {
-            response.setStatus(400);
-            return;
-        }
+
         try {
-            int stockQuantityInt = Integer.parseInt(stockQuantity);
-            double priceDouble = Double.parseDouble(price);
-            double discountDouble = Double.parseDouble(discount);
-            productService.updateProduct(id, name, stockQuantityInt, priceDouble, discountDouble);
+            ProductUpdateDto productUpdateDto = extractProductData(request);
+            productService.updateProduct(productUpdateDto);
 
             response.sendRedirect(request.getContextPath()+"/products-supplier");
         } catch (Exception e) {
-            response.setStatus(500);
+            e.printStackTrace();
         }
     }
+
+    private ProductUpdateDto extractProductData(HttpServletRequest request) throws NumberFormatException {
+        Long id = Long.parseLong(request.getParameter("id"));
+        String name = request.getParameter("name");
+        int stockQuantity = Integer.parseInt(request.getParameter("stockQuantity"));
+        double price = Double.parseDouble(request.getParameter("price"));
+        double discount = Double.parseDouble(request.getParameter("discount"));
+
+        return new ProductUpdateDto(id, name, stockQuantity, price, discount);
+    }
+
+
 }

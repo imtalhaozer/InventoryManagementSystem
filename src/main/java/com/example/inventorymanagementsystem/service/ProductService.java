@@ -2,6 +2,8 @@ package com.example.inventorymanagementsystem.service;
 
 import com.example.inventorymanagementsystem.dao.ProductDao;
 import com.example.inventorymanagementsystem.dao.ProductImageDao;
+import com.example.inventorymanagementsystem.dto.request.product.ProductRequestDto;
+import com.example.inventorymanagementsystem.dto.request.product.ProductUpdateDto;
 import com.example.inventorymanagementsystem.dto.response.Product.ProductResponseDto;
 import com.example.inventorymanagementsystem.util.DbCon;
 
@@ -20,11 +22,11 @@ public class ProductService {
         this.productImageDao = new ProductImageDao(con);
     }
 
-    public boolean addProduct(UUID supplierId, String name, int stockQuantity, double price, double discount, String description) {
-        if (productDao.isProductExists(name)) {
+    public boolean addProduct(ProductRequestDto productRequestDto) {
+        if (productDao.isProductExists(productRequestDto.getName())) {
             return false;
         }
-        productDao.addProduct(supplierId, name, stockQuantity, price, discount, description);
+        productDao.addProduct(productRequestDto);
         return true;
     }
 
@@ -46,8 +48,8 @@ public class ProductService {
         return productDao.getProductsBySupplierId(supplierId);
     }
 
-    public void updateProduct(Long id,String name, int stockQuantity, double price, double discount) {
-        productDao.updateProduct(id,name, stockQuantity, price, discount);
+    public void updateProduct(ProductUpdateDto productUpdateDto) {
+        productDao.updateProduct(productUpdateDto);
     }
 
     public void removeProduct(Long id) {

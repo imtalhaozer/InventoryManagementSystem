@@ -1,6 +1,7 @@
 package com.example.inventorymanagementsystem.service;
 
 import com.example.inventorymanagementsystem.dao.SupplierDao;
+import com.example.inventorymanagementsystem.dto.request.supplier.SupplierCreateDto;
 import com.example.inventorymanagementsystem.dto.response.supplier.SupplierResponseDto;
 import com.example.inventorymanagementsystem.util.DbCon;
 
@@ -15,11 +16,11 @@ public class SupplierService {
         this.supplierDao = new SupplierDao(con);
     }
 
-    public boolean registerSupplier(String name, String email, String password, String photo) {
-        if (supplierDao.isSupplierExist(email)) {
+    public boolean registerSupplier(SupplierCreateDto supplierCreateDto) {
+        if (supplierDao.isSupplierExist(supplierCreateDto.getEmail())) {
             return false;
         }
-        supplierDao.addSupplier(name, email, password, photo);
+        supplierDao.addSupplier(supplierCreateDto);
         return true;
     }
 

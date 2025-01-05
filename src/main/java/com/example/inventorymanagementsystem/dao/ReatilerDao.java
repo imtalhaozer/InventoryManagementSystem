@@ -1,5 +1,6 @@
 package com.example.inventorymanagementsystem.dao;
 
+import com.example.inventorymanagementsystem.dto.request.retailer.RetailerCreateDto;
 import com.example.inventorymanagementsystem.dto.response.retailer.RetailerResponseDto;
 import com.example.inventorymanagementsystem.models.Retailer;
 import com.example.inventorymanagementsystem.util.PasswordUtils;
@@ -23,17 +24,18 @@ public class ReatilerDao {
         this.con = con;
     }
 
-    public void addRetailer(String name, String email, String password, String photo) {
-        String hashedPassword = PasswordUtils.hashPassword(password);
+    public void addRetailer(RetailerCreateDto retailerCreateDto) {
+
+        String hashedPassword = PasswordUtils.hashPassword(retailerCreateDto.getPassword());
         try {
 
             query = "insert into Retailer(id, name, email, password, photo) values(?,?,?,?,?)";
             pst = this.con.prepareStatement(query);
             pst.setString(1, java.util.UUID.randomUUID().toString());
-            pst.setString(2, name);
-            pst.setString(3, email);
+            pst.setString(2, retailerCreateDto.getName());
+            pst.setString(3, retailerCreateDto.getEmail());
             pst.setString(4, hashedPassword);
-            pst.setString(5, photo);
+            pst.setString(5, retailerCreateDto.getPhoto());
             pst.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

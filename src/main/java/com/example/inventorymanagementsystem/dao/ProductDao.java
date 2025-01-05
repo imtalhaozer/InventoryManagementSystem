@@ -1,5 +1,7 @@
 package com.example.inventorymanagementsystem.dao;
 
+import com.example.inventorymanagementsystem.dto.request.product.ProductRequestDto;
+import com.example.inventorymanagementsystem.dto.request.product.ProductUpdateDto;
 import com.example.inventorymanagementsystem.dto.response.Product.ProductResponseDto;
 
 import java.sql.Connection;
@@ -44,17 +46,17 @@ public class ProductDao {
         return product;
     }
 
-    public void addProduct(UUID supplierId, String name, int stockQuantity, double price, double discount, String description) {
+    public void addProduct(ProductRequestDto productRequestDto) {
         try {
 
             query = "insert into Product(supplierId, name, stockQuantity, price, discount, description) values(?,?,?,?,?,?)";
             pst = this.con.prepareStatement(query);
-            pst.setString(1, supplierId.toString());
-            pst.setString(2, name);
-            pst.setInt(3, stockQuantity);
-            pst.setDouble(4, price);
-            pst.setDouble(5, discount);
-            pst.setString(6, description);
+            pst.setString(1, productRequestDto.getSupplierId().toString());
+            pst.setString(2, productRequestDto.getName());
+            pst.setInt(3, productRequestDto.getStockQuantity());
+            pst.setDouble(4, productRequestDto.getPrice());
+            pst.setDouble(5, productRequestDto.getDiscount());
+            pst.setString(6, productRequestDto.getDescription());
             pst.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -151,15 +153,15 @@ public class ProductDao {
         return productIds;
     }
 
-    public void updateProduct(Long id, String name, int stockQuantity, double price, double discount){
+    public void updateProduct(ProductUpdateDto productUpdateDto){
         try {
             query = "update Product set name=?, stockQuantity=?, price=?, discount=? where id=?";
             pst = this.con.prepareStatement(query);
-            pst.setString(1, name);
-            pst.setInt(2, stockQuantity);
-            pst.setDouble(3, price);
-            pst.setDouble(4, discount);
-            pst.setLong(5, id);
+            pst.setString(1, productUpdateDto.getName());
+            pst.setInt(2, productUpdateDto.getStockQuantity());
+            pst.setDouble(3, productUpdateDto.getPrice());
+            pst.setDouble(4, productUpdateDto.getDiscount());
+            pst.setLong(5, productUpdateDto.getId());
 
             pst.executeUpdate();
         } catch (Exception e) {
