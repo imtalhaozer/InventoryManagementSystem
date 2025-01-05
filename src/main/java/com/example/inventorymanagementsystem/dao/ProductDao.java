@@ -3,6 +3,7 @@ package com.example.inventorymanagementsystem.dao;
 import com.example.inventorymanagementsystem.dto.request.product.ProductRequestDto;
 import com.example.inventorymanagementsystem.dto.request.product.ProductUpdateDto;
 import com.example.inventorymanagementsystem.dto.response.Product.ProductResponseDto;
+import com.example.inventorymanagementsystem.models.IsDeleted;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +28,7 @@ public class ProductDao {
     public ProductResponseDto getProductById(Long id){
         ProductResponseDto product = new ProductResponseDto();
         try {
-            query = "select * from Product where id=?";
+            query = "select * from Product where id=? and isDeleted != 'DELETED'";
             pst = this.con.prepareStatement(query);
             pst.setLong(1, id);
             rs = pst.executeQuery();
@@ -81,7 +82,7 @@ public class ProductDao {
     public List<ProductResponseDto> getAllProducts() {
         List<ProductResponseDto> products = new ArrayList<ProductResponseDto>();
         try {
-            query = "select * from Product";
+            query = "select * from Product where isDeleted != 'DELETED'";
             pst = this.con.prepareStatement(query);
             rs = pst.executeQuery();
             while (rs.next()) {
@@ -93,6 +94,7 @@ public class ProductDao {
                 product.setPrice(rs.getDouble("price"));
                 product.setDiscount(rs.getDouble("discount"));
                 product.setDescription(rs.getString("description"));
+                product.setIsDeleted(IsDeleted.valueOf(rs.getString("isDeleted")));
                 products.add(product);
             }
         } catch (Exception e) {
@@ -104,7 +106,7 @@ public class ProductDao {
     public List<ProductResponseDto> getProductsBySupplierId(UUID supplierId) {
         List<ProductResponseDto> products = new ArrayList<ProductResponseDto>();
         try {
-            query = "select * from Product where supplierId=?";
+            query = "select * from Product where supplierId=? and isDeleted != 'DELETED'";
             pst = this.con.prepareStatement(query);
             pst.setString(1, supplierId.toString());
             rs = pst.executeQuery();
@@ -117,6 +119,7 @@ public class ProductDao {
                 product.setPrice(rs.getDouble("price"));
                 product.setDiscount(rs.getDouble("discount"));
                 product.setDescription(rs.getString("description"));
+                product.setIsDeleted(IsDeleted.valueOf(rs.getString("isDeleted")));
                 products.add(product);
             }
         } catch (Exception e) {
@@ -171,9 +174,10 @@ public class ProductDao {
 
     public void removeProduct(Long id){
         try {
-            query = "delete from Product where id=?";
+            query = "update Product set isDeleted=? where id=?";
             pst = this.con.prepareStatement(query);
-            pst.setLong(1, id);
+            pst.setString(1, IsDeleted.DELETED.toString());
+            pst.setLong(2, id);
             pst.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

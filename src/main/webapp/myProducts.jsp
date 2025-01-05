@@ -40,7 +40,7 @@
     </thead>
     <tbody>
     <% if (products != null && !products.isEmpty()) {
-      for (ProductResponseDto product : products) { %>
+      for (ProductResponseDto product : products) {%>
     <form action="<%= request.getContextPath() %>/update-product" method="post">
       <tr>
         <input type="hidden" name="id" value="<%= product.getId() %>">

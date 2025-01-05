@@ -55,10 +55,6 @@
                         <option value="supplier">Supplier</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>Profile Photo</label>
-                    <input type="file" name="photo" class="form-control-file" accept="image/*">
-                </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Register</button>
                 </div>

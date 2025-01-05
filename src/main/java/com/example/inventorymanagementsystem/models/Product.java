@@ -11,7 +11,19 @@ public class Product {
     private double discount;
     private String description;
 
+    private IsDeleted isDeleted;
     public Product() {
+    }
+
+    public Product(Long id, UUID supplierId, String name, int stockQuantity, double price, double discount, String description, IsDeleted isDeleted) {
+        this.id = id;
+        this.supplierId = supplierId;
+        this.name = name;
+        this.stockQuantity = stockQuantity;
+        this.price = price;
+        this.discount = discount;
+        this.description = description;
+        this.isDeleted = isDeleted;
     }
 
     public Product(Long id, UUID supplierId, String name, int stockQuantity, double price, double discount, String description) {
@@ -78,5 +90,13 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public IsDeleted getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(IsDeleted isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }
