@@ -9,7 +9,7 @@ ITG - Inventory Managemet System by @imtalhaozer
 
 **Client:** JSP, Bootstrap , Javascript
 
-**Server:** Temurin JDK 8, Java EE 8
+**Server:** Temurin JDK 8, Java EE 8, Apache Tomcat 9
 
 **Database:** MySQL
 
