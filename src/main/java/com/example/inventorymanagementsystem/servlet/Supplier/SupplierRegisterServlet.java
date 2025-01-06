@@ -38,10 +38,12 @@ public class SupplierRegisterServlet extends HttpServlet {
             if (registerSupplier(supplierCreateDto, request)) {
                 forwardWithToast(request, response, "Supplier successfully registered!", "success");
             } else {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 forwardWithToast(request, response, "Something went wrong during registration!", "error");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             forwardWithToast(request, response, "An unexpected error occurred.", "error");
         }
     }

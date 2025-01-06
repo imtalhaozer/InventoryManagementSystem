@@ -41,7 +41,7 @@ public class ProductGetServlet extends HttpServlet {
 
             request.getRequestDispatcher("/product.jsp").forward(request, response);
         } catch (Exception e) {
-            response.setStatus(500);
+            e.printStackTrace();
         }
     }
 

@@ -104,7 +104,7 @@ public class ProductAddServlet extends HttpServlet {
     private void handleError(HttpServletRequest request, HttpServletResponse response, String message, String toastType) throws ServletException, IOException {
         request.setAttribute("toastMessage", message);
         request.setAttribute("toastType", toastType);
-        request.getRequestDispatcher("error.jsp").forward(request, response);
+        request.getRequestDispatcher("addProduct.jsp").forward(request, response);
     }
 
     private void cleanupTempFiles(File... files) {

@@ -1,0 +1,654 @@
+{
+	"info": {
+		"_postman_id": "8091ebb7-5e2c-4580-90b4-c69a371d3dff",
+		"name": "ITG",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31162394"
+	},
+	"item": [
+		{
+			"name": "supplier",
+			"item": [
+				{
+					"name": "register supplier",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "supplier",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "supplier@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/public-register-supplier",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public-register-supplier"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "retailer",
+			"item": [
+				{
+					"name": "register retailer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "retailer",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "retailer@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/public-register-retailer",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public-register-retailer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "add-product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "portakal",
+									"type": "text"
+								},
+								{
+									"key": "stockQuantity",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "discount",
+									"value": "0.01",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Orange is a citrus fruit known for its refreshing taste and vibrant color. It is rich in vitamin C and antioxidants, making it a popular choice for boosting immunity and overall health. Oranges are versatile and can be enjoyed fresh, as juice, or used in a variety of recipes.",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "postman-cloud:///1efcc05b-18e9-48f0-a10e-42720ee88031"
+								},
+								{
+									"key": "photo2",
+									"type": "file",
+									"src": "postman-cloud:///1efcc05b-f789-4bf0-b06c-b59785fd56cc"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/private-add-product",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"private-add-product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-product2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "elma",
+									"type": "text"
+								},
+								{
+									"key": "stockQuantity",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "discount",
+									"value": "0.01",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "An apple is a sweet, edible fruit produced by apple trees (Malus domestica). It is one of the most popular and widely consumed fruits worldwide. Apples are typically round in shape and come in a variety of colors, including red, green, and yellow.",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "postman-cloud:///1efcc0b9-919b-44c0-b9b7-be40f98e3cc1"
+								},
+								{
+									"key": "photo2",
+									"type": "file",
+									"src": "postman-cloud:///1efcc0b9-be2b-4fd0-b612-5de8703a0647"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/private-add-product",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"private-add-product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/public-product-get-all",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public-product-get-all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-product",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{baseURL}}/public-product-get?id=1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public-product-get"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove-product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/product-remove?id=2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"product-remove"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-products-by-supplier",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/products-supplier",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"products-supplier"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "portakal-guncellendi",
+									"type": "text"
+								},
+								{
+									"key": "stockQuantity",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "18",
+									"type": "text"
+								},
+								{
+									"key": "discount",
+									"value": "0.02",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/update-product",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"update-product"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login-logout",
+			"item": [
+				{
+					"name": "login-retailer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login-email",
+									"value": "retailer@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "login-password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/log-out",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"log-out"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login-supplier",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "login-email",
+									"value": "supplier@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "login-password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "add-to-cart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "quantity",
+							"value": "10",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/private/add-to-cart",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"private",
+						"add-to-cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check-out",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/private-checkout",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"private-checkout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "confirm-bill-item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "success",
+							"value": "true",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/confirm-bill-item",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"confirm-bill-item"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-bill-item",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{baseURL}}/delete-bill-item?id=1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"delete-bill-item"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-from-cart",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/remove-from-cart?id=1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"remove-from-cart"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-cart-items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/private-get-cart-items",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"private-get-cart-items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-order-approvels",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/get-order-approvals",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"get-order-approvals"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/get-orders",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"get-orders"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:8080/InventoryManagementSystem_war_exploded",
+			"type": "string"
+		}
+	]
+}

@@ -56,6 +56,7 @@ public class LoginServlet extends HttpServlet {
                     }
 
                 } else {
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     request.setAttribute("toastMessage", "Invalid email or password.");
                     request.setAttribute("toastType", "error");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
