@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql/mysql-server:5.7
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123456789
+      MYSQL_DATABASE: inventory_management_system
+    ports:
+      - "1234:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+
+volumes:
+  mysql_data:
